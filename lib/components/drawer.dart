@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:openuma/helpers/nav.dart';
 import 'package:openuma/models/state.dart';
-import 'package:openuma/views/login.dart';
+import 'package:openuma/views/settings.dart';
 import 'package:provider/provider.dart';
 
 class DrawerWidget extends StatelessWidget {
@@ -9,7 +10,6 @@ class DrawerWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Consumer<AppState>(builder: (context, state, child) {
-      final bool loggedin = state.api.isLoggedIn();
       return Drawer(
         child: ListView(
           padding: EdgeInsets.zero,
@@ -20,25 +20,18 @@ class DrawerWidget extends StatelessWidget {
               ),
               child: Text("OpenUMA"),
             ),
-            loggedin ? ListTile(
-              title: const Text("Perfil"),
+            ListTile(
+              title: const Text("Ajustes"),
+              leading: const Icon(Icons.settings),
               onTap: () {
-                Navigator.of(context).push(
-                  MaterialPageRoute(
-                    builder: (context) => const LoginPage(),
-                  ),
-                );
+                Nav.push(context, const SettingsPage(), state);
               },
-            ) : ListTile(
-              title: const Text("Iniciar sesión"),
-              onTap: () {
-                Navigator.of(context).push(
-                  MaterialPageRoute(
-                    builder: (context) => const LoginPage(),
-                  ),
-                );
-              },
-            )
+            ),
+            const Divider(),
+            const ListTile(
+              title: Text('Código fuente'),
+              leading: Icon(Icons.fork_left),
+            ),
           ],
         ),
       );

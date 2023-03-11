@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:openuma/components/drawer.dart';
+import 'package:openuma/helpers/nav.dart';
 import 'package:openuma/models/state.dart';
 import 'package:openuma/views/parking.dart';
 import 'package:provider/provider.dart';
@@ -17,20 +18,14 @@ class HomePage extends StatelessWidget {
         body: Column(
           mainAxisAlignment: MainAxisAlignment.start,
           children: <Widget>[
-            InkWell(
-              onTap: () {
-                Navigator.of(context).push(
-                  MaterialPageRoute(
-                    builder: (context) => const ParkingPage(),
-                  ),
-                );
-              },
-              child: Card(
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(10),
-                ),
-                margin: const EdgeInsets.all(15),
-                elevation: 10,
+            Card(
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(10),
+              ),
+              margin: const EdgeInsets.all(15),
+              elevation: 10,
+              child: InkWell(
+                onTap: () => Nav.push(context, const ParkingPage(), state, requiresLogin: true),
                 child: Column(
                   children: const <Widget>[
                     ListTile(

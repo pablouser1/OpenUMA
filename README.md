@@ -1,5 +1,10 @@
 # OpenUMA
+Implementación open source de la app de la UMA usando Flutter
 
-Implementación open source de la app de la UMA
+## Funciones implementadas
+* Barreras
 
-**AÚN EN DESARROLLO**
+## Por implementar
+* Login
+* Notificaciones
+* Notas
