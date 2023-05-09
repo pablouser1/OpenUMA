@@ -1,13 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:openuma/models/state.dart';
+import 'package:openuma/common.dart';
 import 'package:openuma/views/home.dart';
-import 'package:provider/provider.dart';
 
 void main() {
-  runApp(ChangeNotifierProvider<AppState>(
-    create: (_) => AppState(),
-    child: const App(),
-  ));
+  api.setTokensFromConfig();
+  runApp(const App());
 }
 
 class App extends StatelessWidget {
