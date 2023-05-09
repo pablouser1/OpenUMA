@@ -11,14 +11,14 @@ class Api {
   static const String _baseHost = "duma.uma.es";
 
   static const Map<String, String> _defaultHeaders = {
-    'Content-Type': 'application/x-www-form-urlencoded',
+    'Content-Type': 'application/x-www-form-urlencoded;charset=UTF-8',
     'User-Agent': 'Mozilla/5.0 (X11; Linux x86_64; rv:109.0) Gecko/20100101 Firefox/111.0' // TODO: ADD PROPER USER AGENT
   };
 
   String _accessKey = "";
   String _accessSecret = "";
 
-  Future<Expediente> expedientes() async {
+  Future<List<Expediente>> expedientes() async {
     final oauth = _buildAuth();
 
     Uri url = Uri.https(_baseHost, '/api/appuma/misexpedientes/', oauth.toParams());
@@ -26,7 +26,9 @@ class Api {
     final res = await _client.post(url, headers: _buildHeaders(oauth));
 
     if (res.statusCode == 200) {
-      return Expediente.fromJson(jsonDecode(res.body));
+      Iterable l = json.decode(res.body);
+      List<Expediente> expedientes = List<Expediente>.from(l.map((model)=> Expediente.fromJson(model)));
+      return expedientes;
     }
 
     throw Exception("Error al conseguir expedientes");
@@ -47,6 +49,7 @@ class Api {
     return res.statusCode;
   }
 
+  // -- Helpers -- //
   bool isLoggedIn() => _accessKey != "" && _accessSecret != "";
 
   void setTokens(String accessKey, String accessSecret) {
@@ -64,6 +67,7 @@ class Api {
     });
   }
 
+  // -- PRIVATE METHODS -- //
   Map<String, String> _buildHeaders(OAuth oauth) => {
     ..._defaultHeaders,
     ...{"Authentication": oauth.toHeader()},

@@ -4,6 +4,8 @@ import 'package:openuma/helpers/nav.dart';
 import 'package:openuma/views/docencia.dart';
 import 'package:openuma/views/parking.dart';
 
+import '../helpers/ui.dart';
+
 class HomePage extends StatelessWidget {
   const HomePage({super.key});
 
@@ -16,43 +18,17 @@ class HomePage extends StatelessWidget {
         body: Column(
           mainAxisAlignment: MainAxisAlignment.start,
           children: <Widget>[
-            Card(
-              shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(10),
-              ),
-              margin: const EdgeInsets.symmetric(horizontal: 8, vertical: 5),
-              elevation: 5,
-              child: InkWell(
-                onTap: () => Nav.push(context, const DocenciaPage(), requiresLogin: true),
-                child: Column(
-                  children: const <Widget>[
-                    ListTile(
-                      title: Text("Docencia"),
-                      subtitle: Text('Notas, matrícula, créditos...'),
-                      leading: Icon(Icons.school),
-                    ),
-                  ],
-                ),
-              ),
+            UI.makeCard(
+              "Docencia",
+              "Notas, matrícula, créditos...",
+              const Icon(Icons.school),
+              tap: () => Nav.push(context, const DocenciaPage(), requiresLogin: true)
             ),
-            Card(
-              shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(10),
-              ),
-              margin: const EdgeInsets.symmetric(horizontal: 8, vertical: 5),
-              elevation: 5,
-              child: InkWell(
-                onTap: () => Nav.push(context, const ParkingPage(), requiresLogin: true),
-                child: Column(
-                  children: const <Widget>[
-                    ListTile(
-                      title: Text("Aparcamientos"),
-                      subtitle: Text('Activa las barreras de forma remota'),
-                      leading: Icon(Icons.local_parking),
-                    ),
-                  ],
-                ),
-              ),
+            UI.makeCard(
+              "Aparcamientos",
+              "Activa las barreras de forma remota",
+              const Icon(Icons.local_parking),
+              tap: () => Nav.push(context, const ParkingPage(), requiresLogin: true)
             ),
           ],
         ),
