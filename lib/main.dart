@@ -3,8 +3,8 @@ import 'package:openuma/common.dart';
 import 'package:openuma/views/home.dart';
 
 void main() {
-  api.setTokensFromConfig();
   runApp(const App());
+  api.setTokensFromConfig();
 }
 
 class App extends StatelessWidget {
