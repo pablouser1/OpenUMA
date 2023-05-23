@@ -1,15 +1,16 @@
+import 'package:openuma/models/coords.dart';
+
 class Barrera {
   final String id;
   final String name;
-  final double lat;
-  final double lon;
-  static const int range = 100;
+  final Coords coords;
+  final int range;
 
-  Barrera({
+  const Barrera({
     required this.id,
     required this.name,
-    required this.lat,
-    required this.lon
+    required this.coords,
+    required this.range
   });
 }
 
@@ -17,7 +18,7 @@ class Parking {
   final String name;
   final List<Barrera> barreras;
 
-  Parking({
+  const Parking({
     required this.name,
     required this.barreras
   });

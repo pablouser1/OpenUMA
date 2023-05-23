@@ -14,20 +14,17 @@ class ParkingPage extends StatefulWidget {
 }
 
 class ParkingPageState extends State<ParkingPage> {
-  bool _loading = false;
   String _loadingId = "";
 
   void sendCode(Barrera barrera) {
     setState(() {
-      _loading = true;
       _loadingId = barrera.id;
     });
-    api.codigo(barrera.id, barrera.lat, barrera.lon).then((code) {
+    api.codigo(barrera.id, coords: barrera.coords).then((code) {
       final out =
           code == 200 ? "Éxito" : "Ha habido un error al abrir la barrera";
       Messages.snackbar(context, out);
       setState(() {
-        _loading = false;
         _loadingId = "";
       });
     });
@@ -63,7 +60,7 @@ class ParkingPageState extends State<ParkingPage> {
                         ),
                         leading: const Icon(Icons.local_parking),
                       ),
-                      if (_loading && _loadingId == barrera.id)
+                      if (_loadingId == barrera.id)
                         const LinearProgressIndicator()
                     ],
                   ),

@@ -1,6 +1,7 @@
 import 'dart:convert';
 
 import 'package:http/http.dart' as http;
+import 'package:openuma/models/coords.dart';
 import 'package:openuma/models/expediente.dart';
 import 'package:openuma/models/oauth.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -42,14 +43,14 @@ class Api {
   /// Enviar códigos QR / solicitudes barras de aparcamiento
   /// 
   /// Devuelve el status code de la respuesta
-  Future<int> codigo(String id, [double ?lat, double ?lon]) async {
+  Future<int> codigo(String id, {Coords? coords}) async {
     final oauth = _buildAuth();
     Uri url = Uri.https(_baseHost, '/codcod/$id/', oauth.toParams());
     final Map<String, String> body = {};
 
-    if (lat != null && lon != null) {
-      body["lat"] = lat.toString();
-      body["lon"] = lon.toString();
+    if (coords != null) {
+      body["lat"] = coords.lat.toString();
+      body["lon"] = coords.lon.toString();
     }
 
     final res = await _client.post(url, headers: _buildHeaders(oauth), body: body);
