@@ -11,9 +11,13 @@ class Api {
   static const String _baseHost = "duma.uma.es";
 
   static const Map<String, String> _defaultHeaders = {
-    'Content-Type': 'application/x-www-form-urlencoded;charset=UTF-8',
+    'Accept': 'application/json, text/plain, */*',
+    'Accept-Encoding': 'gzip, deflate',
+    'Accept-Language': 'es-ES,es;q=0.9,en-GB;q=0.8,en-US;q=0.7,en;q=0.6',
+    'Content-Type': 'application/x-www-form-urlencoded',
     'Referer': 'http://localhost',
-    'User-Agent': 'Mozilla/5.0 (Linux; Android 13; POCO F1 Build/TQ2A.230505.002; wv) AppleWebKit/537.36 (KHTML, like Gecko) Version/4.0 Chrome/113.0.5672.77 Mobile Safari/537.36' // TODO: ADD PROPER USER AGENT
+    'User-Agent': 'Mozilla/5.0 (Linux; Android 13; POCO F1 Build/TQ2A.230505.002; wv) AppleWebKit/537.36 (KHTML, like Gecko) Version/4.0 Chrome/113.0.5672.77 Mobile Safari/537.36', // TODO: ADD PROPER USER AGENT
+    'X-Requested-With': 'es.uma.appuma'
   };
 
   String _accessKey = "";

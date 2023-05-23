@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:openuma/models/expediente.dart';
 
-import '../helpers/ui.dart';
-
 class NotasPage extends StatefulWidget {
   const NotasPage({super.key, required this.expediente});
 
