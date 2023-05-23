@@ -12,7 +12,8 @@ class Api {
 
   static const Map<String, String> _defaultHeaders = {
     'Content-Type': 'application/x-www-form-urlencoded;charset=UTF-8',
-    'User-Agent': 'Mozilla/5.0 (X11; Linux x86_64; rv:109.0) Gecko/20100101 Firefox/111.0' // TODO: ADD PROPER USER AGENT
+    'Referer': 'http://localhost',
+    'User-Agent': 'Mozilla/5.0 (Linux; Android 13; POCO F1 Build/TQ2A.230505.002; wv) AppleWebKit/537.36 (KHTML, like Gecko) Version/4.0 Chrome/113.0.5672.77 Mobile Safari/537.36' // TODO: ADD PROPER USER AGENT
   };
 
   String _accessKey = "";
@@ -34,6 +35,9 @@ class Api {
     throw Exception("Error al conseguir expedientes");
   }
 
+  /// Enviar códigos QR / solicitudes barras de aparcamiento
+  /// 
+  /// Devuelve el status code de la respuesta
   Future<int> codigo(String id, [double ?lat, double ?lon]) async {
     final oauth = _buildAuth();
     Uri url = Uri.https(_baseHost, '/codcod/$id/', oauth.toParams());

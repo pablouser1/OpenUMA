@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:openuma/helpers/nav.dart';
 import 'package:openuma/views/settings.dart';
+import 'package:openuma/views/tests.dart';
 
 class DrawerWidget extends StatelessWidget {
   const DrawerWidget({super.key});
@@ -25,10 +26,13 @@ class DrawerWidget extends StatelessWidget {
             },
           ),
           const Divider(),
-          const ListTile(
-            title: Text('Código fuente'),
-            leading: Icon(Icons.fork_left),
-          ),
+          ListTile(
+            title: const Text("Tests"),
+            leading: const Icon(Icons.construction),
+            onTap: () {
+              Nav.push(context, const TestsPage());
+            },
+          ),          
         ],
       ),
     );
