@@ -3,11 +3,14 @@ import 'dart:convert';
 import 'package:http/http.dart' as http;
 import 'package:openuma/models/coords.dart';
 import 'package:openuma/models/expediente.dart';
+import 'package:openuma/models/nota.dart';
 import 'package:openuma/models/oauth.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class Api {
   final _client = http.Client();
+
+  static const utf8 = Utf8Decoder();
 
   static const String _baseHost = "duma.uma.es";
 
@@ -15,7 +18,7 @@ class Api {
     'Accept': 'application/json, text/plain, */*',
     'Accept-Encoding': 'gzip, deflate',
     'Accept-Language': 'es-ES,es;q=0.9,en-GB;q=0.8,en-US;q=0.7,en;q=0.6',
-    'Content-Type': 'application/x-www-form-urlencoded',
+    'Content-Type': 'application/x-www-form-urlencoded; charset=utf-8',
     'Referer': 'http://localhost',
     'User-Agent': 'Mozilla/5.0 (Linux; Android 13; POCO F1 Build/TQ2A.230505.002; wv) AppleWebKit/537.36 (KHTML, like Gecko) Version/4.0 Chrome/113.0.5672.77 Mobile Safari/537.36', // TODO: ADD PROPER USER AGENT
     'X-Requested-With': 'es.uma.appuma'
@@ -26,18 +29,35 @@ class Api {
 
   Future<List<Expediente>> expedientes() async {
     final oauth = _buildAuth();
-
     Uri url = Uri.https(_baseHost, '/api/appuma/misexpedientes/', oauth.toParams());
 
     final res = await _client.post(url, headers: _buildHeaders(oauth));
 
     if (res.statusCode == 200) {
-      Iterable l = json.decode(res.body);
+      Iterable l = _decodeUtf8Json(res);
       List<Expediente> expedientes = List<Expediente>.from(l.map((model)=> Expediente.fromJson(model)));
       return expedientes;
     }
 
     throw Exception("Error al conseguir expedientes");
+  }
+
+  Future<List<Nota>> notas(String numero, String codigo) async {
+    final oauth = _buildAuth();
+    Uri url = Uri.https(_baseHost, '/api/appuma/miexpediente/', oauth.toParams());
+
+    final res = await _client.post(url, headers: _buildHeaders(oauth), body: {
+      "numero": numero,
+      "codigo": codigo
+    });
+
+    if (res.statusCode == 200) {
+      Iterable l = _decodeUtf8Json(res);
+      List<Nota> notas = List<Nota>.from(l.map((model)=> Nota.fromJson(model)));
+      return notas;
+    }
+
+    throw Exception("Error al conseguir notas");
   }
 
   /// Enviar códigos QR / solicitudes barras de aparcamiento
@@ -81,6 +101,10 @@ class Api {
     ..._defaultHeaders,
     ...{"Authentication": oauth.toHeader()},
   };
+
+  dynamic _decodeUtf8Json(http.Response res) {
+    return jsonDecode(utf8.convert(res.bodyBytes));
+  }
 
   OAuth _buildAuth() => OAuth(_accessKey, _accessSecret);
 }
