@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:openuma/constants/misc.dart';
 import 'package:openuma/helpers/nav.dart';
 import 'package:openuma/views/settings.dart';
-import 'package:openuma/views/tests.dart';
+import 'package:url_launcher/url_launcher_string.dart';
 
 class DrawerWidget extends StatelessWidget {
   const DrawerWidget({super.key});
@@ -27,10 +28,12 @@ class DrawerWidget extends StatelessWidget {
           ),
           const Divider(),
           ListTile(
-            title: const Text("Tests"),
-            leading: const Icon(Icons.construction),
-            onTap: () {
-              Nav.push(context, const TestsPage());
+            title: const Text("Código fuente"),
+            leading: const Icon(Icons.code),
+            onTap: () async {
+              if (!await launchUrlString(repoUrl)) {
+                throw Exception('Could not launch $repoUrl');
+              }
             },
           ),          
         ],

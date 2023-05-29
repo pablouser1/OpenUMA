@@ -17,6 +17,8 @@ class SettingsPageState extends State<SettingsPage> {
   final tokenController = TextEditingController();
   final secretController = TextEditingController();
 
+  bool _obscurePassword = true;
+
   void setConfig() async {
     prefs = await SharedPreferences.getInstance();
     String? token = prefs.getString("accessToken");
@@ -42,6 +44,22 @@ class SettingsPageState extends State<SettingsPage> {
     super.dispose();
   }
 
+  Widget createSwap() {
+    return IconButton(
+      icon: Icon(
+        // Based on passwordVisible state choose the icon
+        _obscurePassword ? Icons.visibility : Icons.visibility_off,
+        color: Theme.of(context).primaryColorDark,
+      ),
+      onPressed: () {
+        // Update the state i.e. toogle the state of passwordVisible variable
+        setState(() {
+          _obscurePassword = !_obscurePassword;
+        });
+      },
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -55,10 +73,12 @@ class SettingsPageState extends State<SettingsPage> {
             padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 5),
             child: TextFormField(
               controller: tokenController,
-              decoration: const InputDecoration(
-                border: UnderlineInputBorder(),
+              obscureText: _obscurePassword,
+              decoration: InputDecoration(
+                border: const UnderlineInputBorder(),
                 hintText: 'Escribe tu access Token',
                 labelText: 'Access Token',
+                suffixIcon: createSwap()
               ),
             ),
           ),
@@ -66,10 +86,12 @@ class SettingsPageState extends State<SettingsPage> {
             padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 5),
             child: TextFormField(
               controller: secretController,
-              decoration: const InputDecoration(
-                border: UnderlineInputBorder(),
+              obscureText: _obscurePassword,
+              decoration: InputDecoration(
+                border: const UnderlineInputBorder(),
                 hintText: 'Escribe tu access Secret',
                 labelText: 'Access Secret',
+                suffixIcon: createSwap()
               ),
             ),
           ),
