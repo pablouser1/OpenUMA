@@ -1,16 +1,17 @@
 import 'package:openuma/helpers/randomize.dart';
 
 class OAuth {
+  // Constantes extraídas de la App de Android (src/app/services/duma.service.ts)
   static const String _realm = "AppUMA";
   static const String _consumerKey = "84bc108b70bc6578a0a1c88f8a4b7131";
   static const String _consumerSecret = "5Yn9DvNwBuDrbHbX";
+  static const String _signatureMethod = "PLAINTEXT";
+  static const String _version = "1.0";
   late final String _nonce;
   late final String _signature;
-  static const String _signatureMethod = "PLAINTEXT";
   late final int _timestamp;
   late final String _accessToken;
   late final String _accessSecret;
-  static const String _version = "1.0";
 
   OAuth(this._accessToken, this._accessSecret) {
     _timestamp = DateTime.now().millisecondsSinceEpoch;

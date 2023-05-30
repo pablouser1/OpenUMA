@@ -4,6 +4,7 @@ import 'package:http/http.dart' as http;
 import 'package:openuma/models/coords.dart';
 import 'package:openuma/models/expediente.dart';
 import 'package:openuma/models/nota.dart';
+import 'package:openuma/models/notifsinleer.dart';
 import 'package:openuma/models/oauth.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -26,6 +27,20 @@ class Api {
 
   String _accessKey = "";
   String _accessSecret = "";
+
+  Future<int> notifSinLeer() async {
+    final oauth = _buildAuth();
+    Uri url = Uri.https(_baseHost, '/api/appuma/mensajes/usuario/sinleer/', oauth.toParams());
+
+    final res = await _client.post(url, headers: _buildHeaders(oauth));
+    
+    if (res.statusCode == 200) {
+      final notifs = NotifSinLeer.fromJson(_decodeUtf8Json(res));
+      return notifs.mensajesSinLeer;
+    }
+
+    throw Exception("Error al conseguir notificaciones");
+  }
 
   Future<List<Expediente>> expedientes() async {
     final oauth = _buildAuth();

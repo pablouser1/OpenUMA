@@ -16,8 +16,13 @@ class App extends StatelessWidget {
     return MaterialApp(
       title: 'OpenUMA',
       theme: ThemeData(
+        brightness: Brightness.light,
         primarySwatch: Colors.blue,
       ),
+      darkTheme: ThemeData.dark(
+        useMaterial3: true,
+      ),
+      themeMode: ThemeMode.dark,
       home: const HomePage(),
     );
   }
