@@ -65,7 +65,7 @@ class Api {
   /// Devuelve el status code de la respuesta
   Future<int> codigo(String id, {Coords? coords}) async {
     final oauth = _buildAuth();
-    Uri url = Uri.https(_baseHost, '/codcod/$id/', oauth.toParams());
+    Uri url = Uri.https(_baseHost, '/codcod/$id', oauth.toParams());
     final Map<String, String> body = {};
 
     if (coords != null) {
