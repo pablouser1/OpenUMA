@@ -4,6 +4,8 @@ on: [push]
 jobs:
   build:
     runs-on: ubuntu-latest
+    permissions:
+      contents: write
     steps:
     - name: Checkout
       uses: actions/checkout@v3
@@ -13,7 +15,7 @@ jobs:
       with:
         file: './pubspec.yaml' # File to read from
         key-path: '["version"]' # Access the runs key then the using key and retuns the value.
-    - name: Flutter
+    - name: Setup Flutter
       id: flutter-action
       uses: subosito/flutter-action@v2
       with:
@@ -21,11 +23,12 @@ jobs:
         cache: true
         cache-key: 'flutter-:os:-:channel:-:version:-:arch:-:hash:'
         cache-path: "${{ runner.tool_cache }}/flutter/:channel:-:version:-:arch:"
-    - run: flutter build apk --target-platform android-arm,android-arm64 --split-per-abi
+    - name: Build Flutter
+      run: flutter build apk --target-platform android-arm,android-arm64 --split-per-abi
     - name: Create Release
       uses: ncipollo/release-action@v1
       with:
-        artifacts: "./build/app/outputs/flutter-apk/app-*-release.apk"
+        artifacts: ./build/app/outputs/flutter-apk/app-*-release.apk
         artifactContentType: application/vnd.android.package-archive
         token: ${{ secrets.GITHUB_TOKEN }}
         tag: v${{ steps.yaml.outputs.data }}
