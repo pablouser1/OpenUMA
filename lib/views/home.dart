@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:openuma/common.dart';
 import 'package:openuma/components/drawer.dart';
 import 'package:openuma/helpers/nav.dart';
 import 'package:openuma/views/docencia.dart';
@@ -7,25 +6,8 @@ import 'package:openuma/views/parking.dart';
 
 import '../helpers/ui.dart';
 
-class HomePage extends StatefulWidget {
+class HomePage extends StatelessWidget {
   const HomePage({super.key});
-
-  @override
-  HomePageState createState() {
-    return HomePageState();
-  }
-}
-
-class HomePageState extends State<HomePage> {
-  late Future<int> futureNotifs;
-
-  @override
-  void initState() {
-    super.initState();
-    if (api.isLoggedIn()) {
-      futureNotifs = api.notifSinLeer();
-    }
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -47,31 +29,6 @@ class HomePageState extends State<HomePage> {
         ],
       ),
       drawer: const DrawerWidget(),
-      floatingActionButton: FloatingActionButton(
-        child: FutureBuilder<int>(
-          future: futureNotifs,
-          builder: (context, snapshot) {
-            if (snapshot.hasData) {
-              final data = snapshot.data!;
-              return Column(
-                children: [
-                  Text(
-                    "$data",
-                    style: TextStyle(
-                      color: data == 0 ? Colors.green : Colors.red,
-                    ),
-                  ),
-                  const Icon(Icons.notifications),
-                ],
-              );
-            } else if (snapshot.hasError) {
-              return Text('${snapshot.error}');
-            }
-            return const Text("-");
-          },
-        ),
-        onPressed: () {}
-      ),
     );
   }
 }
