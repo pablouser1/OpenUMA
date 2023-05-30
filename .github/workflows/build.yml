@@ -19,13 +19,13 @@ jobs:
         channel: 'stable'
         cache: true
         cache-key: 'flutter-:os:-:channel:-:version:-:arch:-:hash:'
-        cache-path: ${{ runner.tool_cache }}/flutter/:channel:-:version:-:arch:
+        cache-path: "${{ runner.tool_cache }}/flutter/:channel:-:version:-:arch:"
     - run: flutter build apk --target-platform android-arm,android-arm64 --split-per-abi
     - name: Create Release
       uses: ncipollo/release-action@v1
       with:
         artifacts: "./build/app/outputs/flutter-apk/app-*-release.apk"
-        artifactContentType: application/zip
+        artifactContentType: application/vnd.android.package-archive
         token: ${{ secrets.GITHUB_TOKEN }}
         tag: v${{ steps.yaml.outputs.data }}
         allowUpdates: true
