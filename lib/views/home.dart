@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:openuma/components/drawer.dart';
 import 'package:openuma/helpers/nav.dart';
 import 'package:openuma/views/docencia.dart';
+import 'package:openuma/views/notificaciones.dart';
 import 'package:openuma/views/parking.dart';
 
 import '../helpers/ui.dart';
@@ -29,6 +30,11 @@ class HomePage extends StatelessWidget {
         ],
       ),
       drawer: const DrawerWidget(),
+      floatingActionButton: FloatingActionButton(
+        onPressed: () =>
+            Nav.push(context, const NotificacionesPage(), requiresLogin: true),
+        child: const Icon(Icons.notifications),
+      ),
     );
   }
 }
