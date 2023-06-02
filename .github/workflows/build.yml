@@ -7,7 +7,7 @@ jobs:
     permissions:
       contents: write
     env:
-      KEYSTORE_PATH: "/tmp/keystore.jks"
+      STORE_FILE: "/tmp/keystore.jks"
     steps:
     - name: Checkout
       uses: actions/checkout@v3
@@ -26,13 +26,13 @@ jobs:
         cache-key: 'flutter-:os:-:channel:-:version:-:arch:-:hash:'
         cache-path: "${{ runner.tool_cache }}/flutter/:channel:-:version:-:arch:"
     - name: Build KeyStore
-      run: echo ${{ secrets.STORE_BASE64 }} | base64 -d > ${{ env.KEYSTORE_PATH }}
+      run: echo ${{ secrets.STORE_BASE64 }} | base64 -d > ${{ env.STORE_FILE }}
     - name: Build Flutter
       env:
         KEY_ALIAS: ${{ secrets.KEY_ALIAS }}
         KEY_PASSWORD: ${{ secrets.KEY_PASSWORD }}
         STORE_PASSWORD: ${{ secrets.STORE_PASSWORD }}
-        STORE_FILE: ${{ secrets.STORE_FILE }}
+        STORE_FILE: ${{ env.STORE_FILE }}
       run: flutter build apk --target-platform android-arm,android-arm64 --split-per-abi
     - name: Create Release
       uses: ncipollo/release-action@v1
