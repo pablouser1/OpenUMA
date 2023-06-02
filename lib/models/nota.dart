@@ -1,8 +1,8 @@
 class Nota {
-  String curso;
-  List<Dato> datos;
+  final String curso;
+  final List<Dato> datos;
 
-  Nota({
+  const Nota({
     required this.curso,
     required this.datos,
   });

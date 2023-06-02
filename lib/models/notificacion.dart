@@ -1,13 +1,13 @@
 class Notificacion {
-  String canal;
-  String canalNombre;
-  String extra;
-  String fecha;
-  String fechaOrden;
-  bool leido;
-  String mensaje;
+  final String canal;
+  final String canalNombre;
+  final String extra;
+  final String fecha;
+  final String fechaOrden;
+  final bool leido;
+  final String mensaje;
 
-  Notificacion({
+  const Notificacion({
     required this.canal,
     required this.canalNombre,
     required this.extra,

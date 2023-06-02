@@ -26,6 +26,7 @@ class QRPage extends StatelessWidget {
                       ? "Escaneado con éxito"
                       : "Ha habido un error al procesar el QR",
                   actions: [
+                    // TODO: AGREGAR MENSAJE DE VUELTA
                     TextButton(
                         onPressed: () => Navigator.pop(context),
                         child: const Text("OK")),

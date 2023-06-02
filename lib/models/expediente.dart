@@ -1,13 +1,13 @@
 class Expediente {
-  String numExpediente;
-  String codExpediente;
-  String titulacion;
-  String codCentro;
-  String fechaApertura;
-  String nombreCentro;
-  String fechaCierre;
+  final String numExpediente;
+  final String codExpediente;
+  final String titulacion;
+  final String codCentro;
+  final String fechaApertura;
+  final String nombreCentro;
+  final String fechaCierre;
 
-  Expediente({
+  const Expediente({
     required this.numExpediente,
     required this.codExpediente,
     required this.titulacion,

@@ -1,7 +1,7 @@
 class NotifSinLeer {
-  int mensajesSinLeer;
+  final int mensajesSinLeer;
 
-  NotifSinLeer({
+  const NotifSinLeer({
     required this.mensajesSinLeer
   });
 
