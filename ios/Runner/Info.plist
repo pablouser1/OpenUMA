@@ -51,5 +51,9 @@
 	<array>
 		<string>https</string>
 	</array>
+	<key>NSCameraUsageDescription</key>
+	<string>Used for QR Scanning</string>
+	<key>NSMicrophoneUsageDescription</key>
+	<string>Required for QR Scanning, not used</string>
 </dict>
 </plist>

@@ -1,9 +1,13 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:openuma/components/drawer.dart';
+import 'package:openuma/helpers/messages.dart';
 import 'package:openuma/helpers/nav.dart';
 import 'package:openuma/views/docencia.dart';
 import 'package:openuma/views/notificaciones.dart';
 import 'package:openuma/views/parking.dart';
+import 'package:openuma/views/qr.dart';
 
 import '../helpers/ui.dart';
 
@@ -27,6 +31,16 @@ class HomePage extends StatelessWidget {
               const Icon(Icons.local_parking),
               tap: () =>
                   Nav.push(context, const ParkingPage(), requiresLogin: true)),
+          UI.makeCard("Códigos QR", "Escanea códigos QR",
+              const Icon(Icons.qr_code_scanner),
+              tap: () {
+                if (Platform.isAndroid || Platform.isIOS) {
+                  Nav.push(context, const QRPage(), requiresLogin: true);
+                  return;
+                }
+
+                Messages.snackbar(context, "Tu sistema operativo no es compatible con esta funcionalidad");
+              }),
         ],
       ),
       drawer: const DrawerWidget(),

@@ -7,4 +7,18 @@ class Messages {
     );
     ScaffoldMessenger.of(context).showSnackBar(snackBar);
   }
+
+  static Future<void> dialog(BuildContext context, String title, String body, {List<TextButton>? actions}) async {
+    return showDialog<void>(
+      context: context,
+      barrierDismissible: true,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: Text(title),
+          content: Text(body),
+          actions: actions,
+        );
+      }
+    );
+  }
 }

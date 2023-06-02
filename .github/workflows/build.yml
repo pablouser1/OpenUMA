@@ -6,6 +6,8 @@ jobs:
     runs-on: ubuntu-latest
     permissions:
       contents: write
+    env:
+      KEYSTORE_PATH: "/tmp/keystore.jks"
     steps:
     - name: Checkout
       uses: actions/checkout@v3
@@ -23,7 +25,14 @@ jobs:
         cache: true
         cache-key: 'flutter-:os:-:channel:-:version:-:arch:-:hash:'
         cache-path: "${{ runner.tool_cache }}/flutter/:channel:-:version:-:arch:"
+    - name: Build KeyStore
+      run: echo ${{ secrets.STORE_BASE64 }} | base64 -d > ${{ env.KEYSTORE_PATH }}
     - name: Build Flutter
+      env:
+        KEY_ALIAS: ${{ secrets.KEY_ALIAS }}
+        KEY_PASSWORD: ${{ secrets.KEY_PASSWORD }}
+        STORE_PASSWORD: ${{ secrets.STORE_PASSWORD }}
+        STORE_FILE: ${{ secrets.STORE_FILE }}
       run: flutter build apk --target-platform android-arm,android-arm64 --split-per-abi
     - name: Create Release
       uses: ncipollo/release-action@v1
