@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:openuma/common.dart';
 import 'package:openuma/components/loading.dart';
-import 'package:openuma/helpers/messages.dart';
+import 'package:openuma/helpers/ui.dart';
 import 'package:openuma/models/matricula.dart';
 
 class MatriculaPage extends StatefulWidget {
@@ -45,7 +45,7 @@ class MatriculaPageState extends State<MatriculaPage> {
                   ),
                   title: Text(data[index].nombreAsig),
                   subtitle: Text("Titulación: ${data[index].titulacion}"),
-                  onTap: () => Messages.snackbar(context, "En construcción"), // TODO: Permitir ver detalles de la asignatura
+                  onTap: () => UI.snackbar(context, "En construcción"), // TODO: Permitir ver detalles de la asignatura
                 );
               },
             );

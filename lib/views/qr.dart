@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:openuma/common.dart';
-import 'package:openuma/helpers/messages.dart';
+import 'package:openuma/helpers/ui.dart';
 import 'package:qr_code_dart_scan/qr_code_dart_scan.dart';
 
 class QRPage extends StatelessWidget {
@@ -19,7 +19,7 @@ class QRPage extends StatelessWidget {
           if (result.text.startsWith("D/")) {
             final res = api.codigo(result.text);
             res.then((value) {
-              Messages.dialog(
+              UI.dialog(
                 context,
                 "Código QR",
                 value == 200
@@ -37,7 +37,7 @@ class QRPage extends StatelessWidget {
             return;
           }
 
-          Messages.snackbar(context, "QR Inválido");
+          UI.snackbar(context, "QR Inválido");
         },
       ),
     );

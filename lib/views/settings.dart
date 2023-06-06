@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:openuma/common.dart';
-import 'package:openuma/helpers/messages.dart';
+import 'package:openuma/helpers/ui.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class SettingsPage extends StatefulWidget {
@@ -102,7 +102,7 @@ class SettingsPageState extends State<SettingsPage> {
                 prefs.setString("accessToken", tokenController.text);
                 prefs.setString("accessSecret", secretController.text);
                 api.setTokens(tokenController.text, secretController.text);
-                Messages.snackbar(context, "Guardado con éxito");
+                UI.snackbar(context, "Guardado con éxito");
               },
               child: const Text('Guardar'),
             ),

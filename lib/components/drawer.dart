@@ -18,7 +18,14 @@ class DrawerWidget extends StatelessWidget {
             decoration: BoxDecoration(
               color: Colors.blue,
             ),
-            child: Text("OpenUMA"),
+            child: Text(
+              "OpenUMA",
+              style: TextStyle(
+                fontWeight: FontWeight.bold,
+                fontSize: 18,
+              ),
+              textAlign: TextAlign.end,
+            ),
           ),
           ListTile(
             title: const Text("Ajustes"),

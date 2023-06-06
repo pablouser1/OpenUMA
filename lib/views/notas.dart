@@ -54,6 +54,7 @@ class NotasPageState extends State<NotasPage> {
         style: d.tieneNota
             ? TextStyle(
                 fontWeight: FontWeight.bold,
+                fontSize: 15,
                 color: d.aprobado == "si" ? Colors.green : Colors.red)
             : null,
       ),
@@ -90,8 +91,7 @@ class NotasPageState extends State<NotasPage> {
                   child: ListView.builder(
                     itemCount: data[selectedValue].datos.length,
                     itemBuilder: (context, i) {
-                      final cursoAcad = data[selectedValue];
-                      return buildNotaTile(cursoAcad.datos[i]);
+                      return buildNotaTile(data[selectedValue].datos[i]);
                     },
                   ),
                 ),

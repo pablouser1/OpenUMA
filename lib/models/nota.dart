@@ -16,22 +16,22 @@ class Nota {
 }
 
 class Dato {
-  String cursoAcad;
-  String? calificacion;
-  String aprobado;
-  bool tieneNota;
-  String? calificacionAlfa;
-  bool esNotaParcial;
-  String convocatoria;
-  String nombre;
-  String grupo;
-  String codigoConvo;
-  String anotacion;
-  String? nota;
-  String? notaMedia;
-  String? nombreCol;
+  final String cursoAcad;
+  final String? calificacion;
+  final String aprobado;
+  final bool tieneNota;
+  final String? calificacionAlfa;
+  final bool esNotaParcial;
+  final String convocatoria;
+  final String nombre;
+  final String grupo;
+  final String codigoConvo;
+  final String anotacion;
+  final String? nota;
+  final String? notaMedia;
+  final String? nombreCol;
 
-  Dato({
+  const Dato({
     required this.cursoAcad,
     required this.calificacion,
     required this.aprobado,

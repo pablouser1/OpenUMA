@@ -2,7 +2,6 @@ import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:openuma/components/drawer.dart';
-import 'package:openuma/helpers/messages.dart';
 import 'package:openuma/helpers/nav.dart';
 import 'package:openuma/views/docencia.dart';
 import 'package:openuma/views/notificaciones.dart';
@@ -22,25 +21,28 @@ class HomePage extends StatelessWidget {
       ),
       body: Column(
         mainAxisAlignment: MainAxisAlignment.start,
-        children: <Widget>[
-          UI.makeCard("Docencia", "Notas, matrícula, créditos...",
+        children: [
+          UI.card("Docencia", "Notas, matrícula, créditos...",
               const Icon(Icons.school),
               tap: () =>
                   Nav.push(context, const DocenciaPage(), requiresLogin: true)),
-          UI.makeCard("Aparcamientos", "Activa las barreras de forma remota",
+          UI.card("Aparcamientos", "Activa las barreras de forma remota",
               const Icon(Icons.local_parking),
               tap: () =>
                   Nav.push(context, const ParkingPage(), requiresLogin: true)),
-          UI.makeCard("Códigos QR", "Escanea códigos QR",
-              const Icon(Icons.qr_code_scanner),
-              tap: () {
-                if (Platform.isAndroid || Platform.isIOS) {
-                  Nav.push(context, const QRPage(), requiresLogin: true);
-                  return;
-                }
+          UI.card(
+            "Códigos QR",
+            "Escanea códigos QR",
+            const Icon(Icons.qr_code_scanner),
+            tap: () {
+              if (Platform.isAndroid || Platform.isIOS) {
+                Nav.push(context, const QRPage(), requiresLogin: true);
+                return;
+              }
 
-                Messages.snackbar(context, "Tu sistema operativo no es compatible con esta funcionalidad");
-              }),
+              UI.snackbar(context, "Sistema operativo no compatible");
+            },
+          ),
         ],
       ),
       drawer: const DrawerWidget(),

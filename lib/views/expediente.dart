@@ -27,13 +27,13 @@ class ExpedientePageState extends State<ExpedientePage> {
       body: Column(
         mainAxisAlignment: MainAxisAlignment.start,
         children: <Widget>[
-          UI.makeCard(
+          UI.card(
             "Matrícula",
             "Asignaturas matrículadas en este curso académico",
             const Icon(Icons.menu_book),
             tap: () => Nav.push(context, const MatriculaPage()),
           ),
-          UI.makeCard(
+          UI.card(
             "Tablón de notas",
             "Notas publicadas de tus asignaturas matriculadas",
             const Icon(Icons.list),

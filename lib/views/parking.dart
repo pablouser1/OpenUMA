@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:openuma/common.dart';
 import 'package:openuma/constants/parkings.dart';
-import 'package:openuma/helpers/messages.dart';
+import 'package:openuma/helpers/ui.dart';
 import 'package:openuma/models/parking.dart';
 
 class ParkingPage extends StatefulWidget {
@@ -23,7 +23,7 @@ class ParkingPageState extends State<ParkingPage> {
     api.codigo(barrera.id, coords: barrera.coords).then((code) {
       final out =
           code == 200 ? "Éxito" : "Ha habido un error al abrir la barrera";
-      Messages.snackbar(context, out);
+      UI.snackbar(context, out);
       setState(() {
         _loadingId = "";
       });
