@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:openuma/common.dart';
+import 'package:openuma/components/loading.dart';
 import 'package:openuma/helpers/nav.dart';
 import 'package:openuma/models/expediente.dart';
 import 'package:openuma/views/expediente.dart';
@@ -48,7 +49,7 @@ class DocenciaPageState extends State<DocenciaPage> {
           }
 
           // By default, show a loading spinner.
-          return const CircularProgressIndicator();
+          return const LoadingWidget();
         },
       ),
     );

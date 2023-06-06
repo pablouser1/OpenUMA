@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:openuma/common.dart';
+import 'package:openuma/components/loading.dart';
 import 'package:openuma/models/expediente.dart';
 import 'package:openuma/models/nota.dart';
 
@@ -46,13 +47,15 @@ class NotasPageState extends State<NotasPage> {
     return ListTile(
       leading: Text(d.esNotaParcial ? "Parcial" : "Final"),
       title: Text(d.nombre),
-      subtitle: Text("${d.esNotaParcial ? d.nombreCol! : d.calificacionAlfa!} / ${d.convocatoria}"),
+      subtitle: Text(
+          "${d.esNotaParcial ? d.nombreCol! : d.calificacionAlfa!} / ${d.convocatoria}"),
       trailing: Text(
         fallbackEmpty(d.esNotaParcial ? d.nota! : d.calificacion!),
-        style: d.tieneNota ? TextStyle(
-          fontWeight: FontWeight.bold,
-          color: d.aprobado == "si" ? Colors.green : Colors.red
-        ) : null,
+        style: d.tieneNota
+            ? TextStyle(
+                fontWeight: FontWeight.bold,
+                color: d.aprobado == "si" ? Colors.green : Colors.red)
+            : null,
       ),
     );
   }
@@ -60,46 +63,47 @@ class NotasPageState extends State<NotasPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar: AppBar(
-          title: const Text("Notas"),
-        ),
-        body: FutureBuilder<List<Nota>>(
-          future: futureNotas,
-          builder: (context, snapshot) {
-            if (snapshot.hasData) {
-              final data = snapshot.data!;
-              final menuItems = getMenuItems(data);
+      appBar: AppBar(
+        title: const Text("Notas"),
+      ),
+      body: FutureBuilder<List<Nota>>(
+        future: futureNotas,
+        builder: (context, snapshot) {
+          if (snapshot.hasData) {
+            final data = snapshot.data!;
+            final menuItems = getMenuItems(data);
 
-              return Column(
-                mainAxisAlignment: MainAxisAlignment.start,
-                mainAxisSize: MainAxisSize.min,
-                children: [
-                  DropdownButton(
-                    value: selectedValue,
-                    onChanged: (value) {
-                      setState(() {
-                        selectedValue = value!;
-                      });
+            return Column(
+              mainAxisAlignment: MainAxisAlignment.start,
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                DropdownButton(
+                  value: selectedValue,
+                  onChanged: (value) {
+                    setState(() {
+                      selectedValue = value!;
+                    });
+                  },
+                  items: menuItems,
+                ),
+                Expanded(
+                  child: ListView.builder(
+                    itemCount: data[selectedValue].datos.length,
+                    itemBuilder: (context, i) {
+                      final cursoAcad = data[selectedValue];
+                      return buildNotaTile(cursoAcad.datos[i]);
                     },
-                    items: menuItems,
                   ),
-                  Expanded(
-                    child: ListView.builder(
-                      itemCount: data[selectedValue].datos.length,
-                      itemBuilder: (context, i) {
-                        final cursoAcad = data[selectedValue];
-                        return buildNotaTile(cursoAcad.datos[i]);
-                      },
-                    ),
-                  ),
-                ],
-              );
-            } else if (snapshot.hasError) {
-              return Text('${snapshot.error}');
-            }
+                ),
+              ],
+            );
+          } else if (snapshot.hasError) {
+            return Text('${snapshot.error}');
+          }
 
-            return const CircularProgressIndicator();
-          },
-        ));
+          return const LoadingWidget();
+        },
+      ),
+    );
   }
 }

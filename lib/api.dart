@@ -1,6 +1,7 @@
 import 'dart:convert';
 
 import 'package:http/http.dart' as http;
+import 'package:openuma/exceptions/apiexception.dart';
 import 'package:openuma/models/coords.dart';
 import 'package:openuma/models/expediente.dart';
 import 'package:openuma/models/nota.dart';
@@ -40,7 +41,7 @@ class Api {
       return notifs.mensajesSinLeer;
     }
 
-    throw Exception("Error al conseguir notificaciones");
+    throw ApiException(res.statusCode, "Error al conseguir notificaciones");
   }
 
   Future<List<Notificacion>> notificaciones() async {
@@ -55,7 +56,7 @@ class Api {
       return notificaciones;
     }
 
-    throw Exception("Error al conseguir notificaciones");
+    throw ApiException(res.statusCode, "Error al conseguir notificaciones");
   }
 
   Future<List<Expediente>> expedientes() async {
@@ -70,7 +71,7 @@ class Api {
       return expedientes;
     }
 
-    throw Exception("Error al conseguir expedientes");
+    throw ApiException(res.statusCode, "Error al conseguir expedientes");
   }
 
   Future<List<Nota>> notas(String numero, String codigo) async {
@@ -88,7 +89,7 @@ class Api {
       return notas;
     }
 
-    throw Exception("Error al conseguir notas");
+    throw ApiException(res.statusCode, "Error al conseguir notas");
   }
 
   /// Enviar códigos QR / solicitudes barras de aparcamiento

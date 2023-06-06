@@ -38,7 +38,7 @@ jobs:
         KEY_PASSWORD: ${{ secrets.KEY_PASSWORD }}
         STORE_PASSWORD: ${{ secrets.STORE_PASSWORD }}
         STORE_FILE: ${{ env.STORE_FILE }}
-      run: flutter build apk --target-platform android-arm64 --split-per-abi
+      run: flutter build apk --split-per-abi --target-platform android-arm64 --split-debug-info build/app/outputs/symbols
     - name: Create Release
       uses: ncipollo/release-action@v1
       with:
