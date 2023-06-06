@@ -5,22 +5,21 @@ class TestsPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-      return Scaffold(
-        appBar: AppBar(
-          title: const Text("OpenUMA"),
-        ),
-        body: Column(
-          mainAxisAlignment: MainAxisAlignment.start,
-          children: [
-            Center(
-              child: TextButton(
-                child: const Text("Hi"),
-                onPressed: () {
-                },
-              ),
-            )
-          ],
-        ),
-      );
+    return Scaffold(
+      appBar: AppBar(
+        title: const Text("Tests"),
+      ),
+      body: Column(
+        mainAxisAlignment: MainAxisAlignment.start,
+        children: [
+          Center(
+            child: TextButton(
+              child: const Text("Hi"),
+              onPressed: () {},
+            ),
+          ),
+        ],
+      ),
+    );
   }
 }

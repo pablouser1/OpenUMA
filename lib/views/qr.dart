@@ -9,36 +9,37 @@ class QRPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar: AppBar(
-          title: const Text("Escanear código"),
-        ),
-        body: QRCodeDartScanView(
-          scanInvertedQRCode: true,
-          typeScan: TypeScan.live,
-          onCapture: (Result result) {
-            if (result.text.startsWith("D/")) {
-              final res = api.codigo(result.text);
-              res.then((value) {
-                Messages.dialog(
-                  context,
-                  "Código QR",
-                  value == 200
-                      ? "Escaneado con éxito"
-                      : "Ha habido un error al procesar el QR",
-                  actions: [
-                    // TODO: AGREGAR MENSAJE DE VUELTA
-                    TextButton(
-                        onPressed: () => Navigator.pop(context),
-                        child: const Text("OK")),
-                  ],
-                );
-              });
+      appBar: AppBar(
+        title: const Text("Escanear código"),
+      ),
+      body: QRCodeDartScanView(
+        scanInvertedQRCode: true,
+        typeScan: TypeScan.live,
+        onCapture: (Result result) {
+          if (result.text.startsWith("D/")) {
+            final res = api.codigo(result.text);
+            res.then((value) {
+              Messages.dialog(
+                context,
+                "Código QR",
+                value == 200
+                    ? "Escaneado con éxito"
+                    : "Ha habido un error al procesar el QR",
+                actions: [
+                  // TODO: AGREGAR MENSAJE DE VUELTA
+                  TextButton(
+                      onPressed: () => Navigator.pop(context),
+                      child: const Text("OK")),
+                ],
+              );
+            });
 
-              return;
-            }
+            return;
+          }
 
-            Messages.snackbar(context, "QR Inválido");
-          },
-        ));
+          Messages.snackbar(context, "QR Inválido");
+        },
+      ),
+    );
   }
 }

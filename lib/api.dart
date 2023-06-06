@@ -4,6 +4,7 @@ import 'package:http/http.dart' as http;
 import 'package:openuma/exceptions/apiexception.dart';
 import 'package:openuma/models/coords.dart';
 import 'package:openuma/models/expediente.dart';
+import 'package:openuma/models/matricula.dart';
 import 'package:openuma/models/nota.dart';
 import 'package:openuma/models/notificacion.dart';
 import 'package:openuma/models/notifsinleer.dart';
@@ -72,6 +73,21 @@ class Api {
     }
 
     throw ApiException(res.statusCode, "Error al conseguir expedientes");
+  }
+
+  Future<List<Matricula>> matricula() async {
+    final oauth = _buildAuth();
+    Uri url = Uri.https(_baseHost, '/api/appuma/matricula/', oauth.toParams());
+
+    final res = await _client.post(url, headers: _buildHeaders(oauth));
+
+    if (res.statusCode == 200) {
+      Iterable l = _decodeUtf8Json(res);
+      List<Matricula> matriculas = List<Matricula>.from(l.map((model)=> Matricula.fromJson(model)));
+      return matriculas;
+    }
+
+    throw ApiException(res.statusCode, "Error al conseguir matrícula");
   }
 
   Future<List<Nota>> notas(String numero, String codigo) async {

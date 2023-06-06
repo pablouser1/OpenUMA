@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:openuma/helpers/nav.dart';
 import 'package:openuma/models/expediente.dart';
+import 'package:openuma/views/matricula.dart';
 import 'package:openuma/views/notas.dart';
 
 import '../helpers/ui.dart';
@@ -27,10 +28,10 @@ class ExpedientePageState extends State<ExpedientePage> {
         mainAxisAlignment: MainAxisAlignment.start,
         children: <Widget>[
           UI.makeCard(
-            "Matrículas",
+            "Matrícula",
             "Asignaturas matrículadas en este curso académico",
             const Icon(Icons.menu_book),
-            tap: () => {}
+            tap: () => Nav.push(context, const MatriculaPage()),
           ),
           UI.makeCard(
             "Tablón de notas",
