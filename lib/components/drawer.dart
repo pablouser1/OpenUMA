@@ -39,7 +39,8 @@ class DrawerWidget extends StatelessWidget {
             title: const Text("Código fuente"),
             leading: const Icon(Icons.code),
             onTap: () async {
-              if (!await launchUrlString(repoUrl, mode: LaunchMode.externalApplication)) {
+              if (!await launchUrlString(repoUrl,
+                  mode: LaunchMode.externalApplication)) {
                 throw Exception('Could not launch $repoUrl');
               }
             },

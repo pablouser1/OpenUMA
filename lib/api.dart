@@ -24,7 +24,8 @@ class Api {
     'Accept-Language': 'es-ES,es;q=0.9,en-GB;q=0.8,en-US;q=0.7,en;q=0.6',
     'Content-Type': 'application/x-www-form-urlencoded; charset=utf-8',
     'Referer': 'http://localhost',
-    'User-Agent': 'Mozilla/5.0 (Linux; Android 13; POCO F1 Build/TQ2A.230505.002; wv) AppleWebKit/537.36 (KHTML, like Gecko) Version/4.0 Chrome/113.0.5672.77 Mobile Safari/537.36', // TODO: ADD PROPER USER AGENT
+    'User-Agent':
+        'Mozilla/5.0 (Linux; Android 13) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/117.0.5938.60 Mobile Safari/537.36',
     'X-Requested-With': 'es.uma.appuma'
   };
 
@@ -33,10 +34,11 @@ class Api {
 
   Future<int> notifSinLeer() async {
     final oauth = _buildAuth();
-    Uri url = Uri.https(_baseHost, '/api/appuma/mensajes/usuario/sinleer/', oauth.toParams());
+    Uri url = Uri.https(
+        _baseHost, '/api/appuma/mensajes/usuario/sinleer/', oauth.toParams());
 
     final res = await _client.post(url, headers: _buildHeaders(oauth));
-    
+
     if (res.statusCode == 200) {
       final notifs = NotifSinLeer.fromJson(_decodeUtf8Json(res));
       return notifs.mensajesSinLeer;
@@ -47,13 +49,15 @@ class Api {
 
   Future<List<Notificacion>> notificaciones() async {
     final oauth = _buildAuth();
-    Uri url = Uri.https(_baseHost, '/api/appuma/mensajes/usuario/', oauth.toParams());
+    Uri url =
+        Uri.https(_baseHost, '/api/appuma/mensajes/usuario/', oauth.toParams());
 
     final res = await _client.post(url, headers: _buildHeaders(oauth));
 
     if (res.statusCode == 200) {
       Iterable l = _decodeUtf8Json(res);
-      List<Notificacion> notificaciones = List<Notificacion>.from(l.map((model)=> Notificacion.fromJson(model)));
+      List<Notificacion> notificaciones = List<Notificacion>.from(
+          l.map((model) => Notificacion.fromJson(model)));
       return notificaciones;
     }
 
@@ -62,13 +66,15 @@ class Api {
 
   Future<List<Expediente>> expedientes() async {
     final oauth = _buildAuth();
-    Uri url = Uri.https(_baseHost, '/api/appuma/misexpedientes/', oauth.toParams());
+    Uri url =
+        Uri.https(_baseHost, '/api/appuma/misexpedientes/', oauth.toParams());
 
     final res = await _client.post(url, headers: _buildHeaders(oauth));
 
     if (res.statusCode == 200) {
       Iterable l = _decodeUtf8Json(res);
-      List<Expediente> expedientes = List<Expediente>.from(l.map((model)=> Expediente.fromJson(model)));
+      List<Expediente> expedientes =
+          List<Expediente>.from(l.map((model) => Expediente.fromJson(model)));
       return expedientes;
     }
 
@@ -83,7 +89,8 @@ class Api {
 
     if (res.statusCode == 200) {
       Iterable l = _decodeUtf8Json(res);
-      List<Matricula> matriculas = List<Matricula>.from(l.map((model)=> Matricula.fromJson(model)));
+      List<Matricula> matriculas =
+          List<Matricula>.from(l.map((model) => Matricula.fromJson(model)));
       return matriculas;
     }
 
@@ -92,16 +99,17 @@ class Api {
 
   Future<List<Nota>> notas(String numero, String codigo) async {
     final oauth = _buildAuth();
-    Uri url = Uri.https(_baseHost, '/api/appuma/miexpediente/', oauth.toParams());
+    Uri url =
+        Uri.https(_baseHost, '/api/appuma/miexpediente/', oauth.toParams());
 
-    final res = await _client.post(url, headers: _buildHeaders(oauth), body: {
-      "numero": numero,
-      "codigo": codigo
-    });
+    final res = await _client.post(url,
+        headers: _buildHeaders(oauth),
+        body: {"numero": numero, "codigo": codigo});
 
     if (res.statusCode == 200) {
       Iterable l = _decodeUtf8Json(res);
-      List<Nota> notas = List<Nota>.from(l.map((model)=> Nota.fromJson(model)));
+      List<Nota> notas =
+          List<Nota>.from(l.map((model) => Nota.fromJson(model)));
       return notas;
     }
 
@@ -109,7 +117,7 @@ class Api {
   }
 
   /// Enviar códigos QR / solicitudes barras de aparcamiento
-  /// 
+  ///
   /// Devuelve el status code de la respuesta
   Future<int> codigo(String id, {Coords? coords}) async {
     final oauth = _buildAuth();
@@ -121,7 +129,8 @@ class Api {
       body["lon"] = coords.lon.toString();
     }
 
-    final res = await _client.post(url, headers: _buildHeaders(oauth), body: body);
+    final res =
+        await _client.post(url, headers: _buildHeaders(oauth), body: body);
 
     return res.statusCode;
   }
@@ -146,9 +155,9 @@ class Api {
 
   // -- PRIVATE METHODS -- //
   Map<String, String> _buildHeaders(OAuth oauth) => {
-    ..._defaultHeaders,
-    ...{"Authentication": oauth.toHeader()},
-  };
+        ..._defaultHeaders,
+        ...{"Authentication": oauth.toHeader()},
+      };
 
   dynamic _decodeUtf8Json(http.Response res) {
     return jsonDecode(utf8.convert(res.bodyBytes));

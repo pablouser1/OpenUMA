@@ -21,9 +21,13 @@ class ParkingPageState extends State<ParkingPage> {
       _loadingId = barrera.id;
     });
     api.codigo(barrera.id, coords: barrera.coords).then((code) {
-      final out =
-          code == 200 ? "Éxito" : "Ha habido un error al abrir la barrera";
+      final out = code == 200 ? "Éxito" : "Error: HTTP $code";
       UI.snackbar(context, out);
+      setState(() {
+        _loadingId = "";
+      });
+    }).onError((error, _) {
+      UI.snackbar(context, "Error desconocido: ${error.toString()}");
       setState(() {
         _loadingId = "";
       });
