@@ -46,4 +46,4 @@ jobs:
         artifactContentType: application/vnd.android.package-archive
         token: ${{ secrets.GITHUB_TOKEN }}
         tag: v${{ steps.yaml.outputs.data }}
-        allowUpdates: true
+        skipIfReleaseExists: true

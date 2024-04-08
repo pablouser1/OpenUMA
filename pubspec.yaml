@@ -32,9 +32,9 @@ dependencies:
     sdk: flutter
 
   provider: ^6.0.5
-  http: ^1.0.0
+  http: ^1.1.0
   shared_preferences: ^2.0.18
-  url_launcher: ^6.1.11
+  url_launcher: ^6.2.4
   qr_code_dart_scan: ^0.7.1
 
 dev_dependencies:
