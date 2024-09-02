@@ -324,10 +324,10 @@ packages:
     dependency: "direct main"
     description:
       name: qr_code_dart_scan
-      sha256: "7a6d4a17a8b68bea78b96ed2dab00a0619600517bcd6ea9195e40b0aebcab556"
+      sha256: "8271bd16c4294a81335066f6a8e109d4b95ee347089dddb626f7d711bc0dda4a"
       url: "https://pub.dev"
     source: hosted
-    version: "0.9.0"
+    version: "0.9.1"
   shared_preferences:
     dependency: "direct main"
     description:
