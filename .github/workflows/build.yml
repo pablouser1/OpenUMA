@@ -17,11 +17,6 @@ jobs:
       with:
         file: './pubspec.yaml' # File to read from
         key-path: '["version"]' # Access the runs key then the using key and retuns the value.
-    - name: Setup Java
-      uses: actions/setup-java@v3
-      with:
-        distribution: 'temurin'
-        java-version: '17'
     - name: Setup Flutter
       id: flutter-action
       uses: subosito/flutter-action@v2
