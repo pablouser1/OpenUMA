@@ -11,6 +11,8 @@ import 'package:openuma/models/notifsinleer.dart';
 import 'package:openuma/models/oauth.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
+/// Wraper de API de la UMA
+/// Extraído usando MITMProxy y la APP oficial para Android
 class Api {
   final _client = http.Client();
 
