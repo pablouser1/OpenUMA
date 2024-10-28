@@ -14,11 +14,11 @@ class DrawerWidget extends StatelessWidget {
       child: ListView(
         padding: EdgeInsets.zero,
         children: [
-          const DrawerHeader(
+          DrawerHeader(
             decoration: BoxDecoration(
-              color: Colors.blue,
+              color: Theme.of(context).colorScheme.inversePrimary,
             ),
-            child: Text(
+            child: const Text(
               "OpenUMA",
               style: TextStyle(
                 fontWeight: FontWeight.bold,

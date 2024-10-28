@@ -1,0 +1,37 @@
+name: Release
+
+on:
+  workflow_run:
+    workflows: [Build]
+    types:
+      - completed
+
+jobs:
+  release:
+    if: ${{ github.event.workflow_run.conclusion == 'success' }}
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+      - name: Run read-yaml action
+        id: yaml
+        uses: jbutcher5/read-yaml@main
+        with:
+          file: './pubspec.yaml'
+          key-path: '["version"]'
+      - name: Download artifacts
+        id: download-artifact
+        uses: dawidd6/action-download-artifact@v6
+        with:
+          path: /tmp/artifacts
+          run_id: ${{ github.event.workflow_run.id }}
+      - name: Create Release
+        uses: ncipollo/release-action@v1
+        with:
+          artifacts: /tmp/artifacts/**/*
+          token: ${{ secrets.GITHUB_TOKEN }}
+          tag: v${{ steps.yaml.outputs.data }}
+          generateReleaseNotes: true
+          skipIfReleaseExists: true

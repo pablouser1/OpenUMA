@@ -36,7 +36,11 @@ class HomePage extends StatelessWidget {
             const Icon(Icons.qr_code_scanner),
             tap: () {
               if (Platform.isAndroid || Platform.isIOS) {
-                Nav.push(context, const QRPage(), requiresLogin: true);
+                Nav.push(
+                  context,
+                  const QRPage(),
+                  requiresLogin: true,
+                );
                 return;
               }
 
@@ -47,8 +51,11 @@ class HomePage extends StatelessWidget {
       ),
       drawer: const DrawerWidget(),
       floatingActionButton: FloatingActionButton(
-        onPressed: () =>
-            Nav.push(context, const NotificacionesPage(), requiresLogin: true),
+        onPressed: () => Nav.push(
+          context,
+          const NotificacionesPage(),
+          requiresLogin: true,
+        ),
         child: const Icon(Icons.notifications),
       ),
     );

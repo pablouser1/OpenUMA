@@ -29,7 +29,7 @@ class DocenciaPageState extends State<DocenciaPage> {
       appBar: AppBar(
         title: const Text("Docencia"),
       ),
-      body: FutureBuilder<List<Expediente>> (
+      body: FutureBuilder(
         future: futureExpedientes,
         builder: (context, snapshot) {
           if (snapshot.hasData) {
@@ -40,7 +40,13 @@ class DocenciaPageState extends State<DocenciaPage> {
                 return ListTile(
                   title: Text(data[index].titulacion),
                   subtitle: Text(data[index].fechaApertura),
-                  onTap: () => Nav.push(context, ExpedientePage(expediente: data[index]), requiresLogin: true),
+                  onTap: () => Nav.push(
+                    context,
+                    ExpedientePage(
+                      expediente: data[index],
+                    ),
+                    requiresLogin: true,
+                  ),
                 );
               },
             );

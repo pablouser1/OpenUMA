@@ -6,6 +6,28 @@ import 'package:qr_code_dart_scan/qr_code_dart_scan.dart';
 class QRPage extends StatelessWidget {
   const QRPage({super.key});
 
+  Future<void> _onQrCode(Result result, BuildContext context) async {
+    if (!result.text.startsWith("D/")) {
+      UI.snackbar(context, "QR Inválido");
+      return;
+    }
+
+    final code = await api.codigo(result.text);
+
+    final msg = code == 200
+        ? "Escaneado con éxito"
+        : "Ha habido un error al procesar el QR";
+
+    if (!context.mounted) return;
+
+    UI.dialog(context, "Código QR", msg, actions: [
+      TextButton(
+        onPressed: () => Navigator.pop(context),
+        child: const Text("OK"),
+      ),
+    ]);
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -15,30 +37,7 @@ class QRPage extends StatelessWidget {
       body: QRCodeDartScanView(
         scanInvertedQRCode: true,
         typeScan: TypeScan.live,
-        onCapture: (Result result) {
-          if (result.text.startsWith("D/")) {
-            final res = api.codigo(result.text);
-            res.then((value) {
-              UI.dialog(
-                context,
-                "Código QR",
-                value == 200
-                    ? "Escaneado con éxito"
-                    : "Ha habido un error al procesar el QR",
-                actions: [
-                  // TODO: AGREGAR MENSAJE DE VUELTA
-                  TextButton(
-                      onPressed: () => Navigator.pop(context),
-                      child: const Text("OK")),
-                ],
-              );
-            });
-
-            return;
-          }
-
-          UI.snackbar(context, "QR Inválido");
-        },
+        onCapture: (result) => _onQrCode(result, context),
       ),
     );
   }

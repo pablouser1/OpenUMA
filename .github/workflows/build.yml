@@ -1,8 +1,18 @@
-name: Build APKs
-on: [push]
+name: Build
+on:
+  push:
+    branches:
+      - master
+    paths:
+      - lib/**
+      - android/**
+      - linux/**
+      - pubspec.yaml
+      - pubspec.lock
 
 jobs:
-  build:
+  # Android build
+  android:
     runs-on: ubuntu-latest
     permissions:
       contents: write
@@ -10,13 +20,7 @@ jobs:
       STORE_FILE: "/tmp/keystore.jks"
     steps:
     - name: Checkout
-      uses: actions/checkout@v3
-    - name: Run read-yaml action
-      id: yaml
-      uses: jbutcher5/read-yaml@main
-      with:
-        file: './pubspec.yaml' # File to read from
-        key-path: '["version"]' # Access the runs key then the using key and retuns the value.
+      uses: actions/checkout@v4
     - name: Setup Java
       uses: actions/setup-java@v3
       with:
@@ -25,24 +29,53 @@ jobs:
     - name: Setup Flutter
       uses: subosito/flutter-action@v2
       with:
-        channel: 'stable'
+        channel: stable
         cache: true
-        cache-key: 'flutter-:os:-:channel:-:version:-:arch:-:hash:'
+        cache-key: "flutter-:os:-:channel:-:version:-:arch:-:hash:"
         cache-path: "${{ runner.tool_cache }}/flutter/:channel:-:version:-:arch:"
+        pub-cache-key: "flutter-pub:os:-:channel:-:version:-:arch:-:hash:"
     - name: Build KeyStore
       run: echo ${{ secrets.STORE_BASE64 }} | base64 -d > ${{ env.STORE_FILE }}
-    - name: Build Flutter
-      env:
-        KEY_ALIAS: ${{ secrets.KEY_ALIAS }}
-        KEY_PASSWORD: ${{ secrets.KEY_PASSWORD }}
-        STORE_PASSWORD: ${{ secrets.STORE_PASSWORD }}
-        STORE_FILE: ${{ env.STORE_FILE }}
-      run: flutter build apk --split-per-abi --target-platform android-arm64 --split-debug-info build/app/outputs/symbols
-    - name: Create Release
-      uses: ncipollo/release-action@v1
+    - name: Write key.properties
+      run: |
+        echo "storePassword=${{ secrets.STORE_PASSWORD }}" > android/key.properties
+        echo "keyPassword=${{ secrets.KEY_PASSWORD }}" >> android/key.properties
+        echo "keyAlias=${{ secrets.KEY_ALIAS }}" >> android/key.properties
+        echo "storeFile=${{ env.STORE_FILE }}" >> android/key.properties
+    - name: Get Flutter pubs
+      run: flutter pub get
+    - name: Build Android
+      run: flutter build apk --split-per-abi --target-platform android-arm64,android-arm --split-debug-info build/app/outputs/symbols
+    - name: Upload Build Artifact
+      uses: actions/upload-artifact@v4
       with:
-        artifacts: ./build/app/outputs/flutter-apk/app-*-release.apk
-        artifactContentType: application/vnd.android.package-archive
-        token: ${{ secrets.GITHUB_TOKEN }}
-        tag: v${{ steps.yaml.outputs.data }}
-        skipIfReleaseExists: true
+        name: android-artifact
+        path: ./build/app/outputs/flutter-apk/app-*-release.apk
+  # Linux build
+  linux:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+    - name: Checkout
+      uses: actions/checkout@v4
+    - name: Setup Flutter
+      uses: subosito/flutter-action@v2
+      with:
+        channel: stable
+        cache: true
+        cache-key: "flutter-:os:-:channel:-:version:-:arch:-:hash:"
+        cache-path: "${{ runner.tool_cache }}/flutter/:channel:-:version:-:arch:"
+        pub-cache-key: "flutter-pub:os:-:channel:-:version:-:arch:-:hash:"
+    - name: Get Flutter pubs
+      run: flutter pub get
+    - name: Build Linux
+      run: flutter build linux --split-debug-info build/app/outputs/symbols
+    - name: Zip Linux build
+      run: zip -qq -r linux-x64.zip *
+      working-directory: ./build/linux/x64/release/bundle
+    - name: Upload Build Artifact
+      uses: actions/upload-artifact@v4
+      with:
+        name: linux-artifact
+        path: ./build/linux/x64/release/bundle/linux-x64.zip

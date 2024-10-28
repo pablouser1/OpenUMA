@@ -31,13 +31,20 @@ class ExpedientePageState extends State<ExpedientePage> {
             "Matrícula",
             "Asignaturas matrículadas en este curso académico",
             const Icon(Icons.menu_book),
-            tap: () => Nav.push(context, const MatriculaPage()),
+            tap: () => Nav.push(
+              context,
+              const MatriculaPage(),
+            ),
           ),
           UI.card(
             "Tablón de notas",
             "Notas publicadas de tus asignaturas matriculadas",
             const Icon(Icons.list),
-            tap: () => Nav.push(context, NotasPage(expediente: widget.expediente), requiresLogin: true),
+            tap: () => Nav.push(
+              context,
+              NotasPage(expediente: widget.expediente),
+              requiresLogin: true,
+            ),
           ),
         ],
       ),
