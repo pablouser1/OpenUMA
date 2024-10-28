@@ -4,8 +4,8 @@ import 'package:openuma/views/home.dart';
 import 'package:dynamic_color/dynamic_color.dart';
 
 void main() {
-  api.setTokensFromConfig();
   runApp(const App());
+  api.setTokensFromConfig();
 }
 
 class App extends StatelessWidget {
