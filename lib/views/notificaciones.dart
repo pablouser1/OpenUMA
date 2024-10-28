@@ -26,8 +26,15 @@ class NotificacionesPageState extends State<NotificacionesPage> {
     return Scaffold(
       appBar: AppBar(
         title: const Text("Notificaciones"),
+        backgroundColor: Theme.of(context).colorScheme.inversePrimary,
+        leading: IconButton(
+          onPressed: () {
+            Navigator.pop(context);
+          },
+          icon: const Icon(Icons.arrow_back),
+        ),
       ),
-      body: FutureBuilder<List<Notificacion>> (
+      body: FutureBuilder(
         future: futureNotificaciones,
         builder: (context, snapshot) {
           if (snapshot.hasData) {

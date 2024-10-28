@@ -33,6 +33,13 @@ class QRPage extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         title: const Text("Escanear código"),
+        backgroundColor: Theme.of(context).colorScheme.inversePrimary,
+        leading: IconButton(
+          onPressed: () {
+            Navigator.pop(context);
+          },
+          icon: const Icon(Icons.arrow_back),
+        ),
       ),
       body: QRCodeDartScanView(
         scanInvertedQRCode: true,

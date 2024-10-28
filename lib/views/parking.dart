@@ -89,6 +89,13 @@ class ParkingPageState extends State<ParkingPage> {
     return Scaffold(
       appBar: AppBar(
         title: const Text("Aparcamientos"),
+        backgroundColor: Theme.of(context).colorScheme.inversePrimary,
+        leading: IconButton(
+          onPressed: () {
+            Navigator.pop(context);
+          },
+          icon: const Icon(Icons.arrow_back),
+        ),
       ),
       body: ListView(
         children: _handleBarreras(),

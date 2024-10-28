@@ -18,18 +18,31 @@ class HomePage extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         title: const Text("OpenUMA"),
+        backgroundColor: Theme.of(context).colorScheme.inversePrimary,
       ),
       body: Column(
         mainAxisAlignment: MainAxisAlignment.start,
         children: [
-          UI.card("Docencia", "Notas, matrícula, créditos...",
-              const Icon(Icons.school),
-              tap: () =>
-                  Nav.push(context, const DocenciaPage(), requiresLogin: true)),
-          UI.card("Aparcamientos", "Activa las barreras de forma remota",
-              const Icon(Icons.local_parking),
-              tap: () =>
-                  Nav.push(context, const ParkingPage(), requiresLogin: true)),
+          UI.card(
+            "Docencia",
+            "Notas, matrícula, créditos...",
+            const Icon(Icons.school),
+            tap: () => Nav.push(
+              context,
+              const DocenciaPage(),
+              requiresLogin: true,
+            ),
+          ),
+          UI.card(
+            "Aparcamientos",
+            "Activa las barreras de forma remota",
+            const Icon(Icons.local_parking),
+            tap: () => Nav.push(
+              context,
+              const ParkingPage(),
+              requiresLogin: true,
+            ),
+          ),
           UI.card(
             "Códigos QR",
             "Escanea códigos QR",

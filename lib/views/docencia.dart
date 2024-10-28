@@ -28,6 +28,13 @@ class DocenciaPageState extends State<DocenciaPage> {
     return Scaffold(
       appBar: AppBar(
         title: const Text("Docencia"),
+        backgroundColor: Theme.of(context).colorScheme.inversePrimary,
+        leading: IconButton(
+          onPressed: () {
+            Navigator.pop(context);
+          },
+          icon: const Icon(Icons.arrow_back),
+        ),
       ),
       body: FutureBuilder(
         future: futureExpedientes,

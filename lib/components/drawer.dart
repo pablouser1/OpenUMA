@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:openuma/constants/misc.dart';
 import 'package:openuma/helpers/nav.dart';
 import 'package:openuma/views/settings.dart';
-import 'package:openuma/views/tests.dart';
 import 'package:url_launcher/url_launcher_string.dart';
+import 'package:package_info_plus/package_info_plus.dart';
 
 class DrawerWidget extends StatelessWidget {
   const DrawerWidget({super.key});
@@ -39,17 +39,27 @@ class DrawerWidget extends StatelessWidget {
             title: const Text("Código fuente"),
             leading: const Icon(Icons.code),
             onTap: () async {
-              if (!await launchUrlString(repoUrl,
-                  mode: LaunchMode.externalApplication)) {
+              if (!await launchUrlString(
+                repoUrl,
+                mode: LaunchMode.externalApplication,
+              )) {
                 throw Exception('Could not launch $repoUrl');
               }
             },
           ),
           ListTile(
-            title: const Text("Tests"),
-            leading: const Icon(Icons.construction),
-            onTap: () {
-              Nav.push(context, const TestsPage());
+            title: const Text("Acerca de"),
+            leading: const Icon(Icons.info),
+            onTap: () async {
+              PackageInfo packageInfo = await PackageInfo.fromPlatform();
+
+              if (!context.mounted) return;
+
+              showAboutDialog(
+                context: context,
+                applicationName: packageInfo.appName,
+                applicationVersion: packageInfo.version,
+              );
             },
           ),
         ],

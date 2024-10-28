@@ -27,8 +27,15 @@ class MatriculaPageState extends State<MatriculaPage> {
     return Scaffold(
       appBar: AppBar(
         title: const Text("Matrícula"),
+        backgroundColor: Theme.of(context).colorScheme.inversePrimary,
+        leading: IconButton(
+          onPressed: () {
+            Navigator.pop(context);
+          },
+          icon: const Icon(Icons.arrow_back),
+        ),
       ),
-      body: FutureBuilder<List<Matricula>> (
+      body: FutureBuilder<List<Matricula>>(
         future: futureMatricula,
         builder: (context, snapshot) {
           if (snapshot.hasData) {
@@ -45,7 +52,8 @@ class MatriculaPageState extends State<MatriculaPage> {
                   ),
                   title: Text(data[index].nombreAsig),
                   subtitle: Text("Titulación: ${data[index].titulacion}"),
-                  onTap: () => UI.snackbar(context, "En construcción"), // TODO: Permitir ver detalles de la asignatura
+                  onTap: () => UI.snackbar(context,
+                      "En construcción"), // TODO: Permitir ver detalles de la asignatura
                 );
               },
             );

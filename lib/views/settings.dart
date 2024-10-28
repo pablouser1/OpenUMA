@@ -65,6 +65,13 @@ class SettingsPageState extends State<SettingsPage> {
     return Scaffold(
       appBar: AppBar(
         title: const Text("Ajustes"),
+        backgroundColor: Theme.of(context).colorScheme.inversePrimary,
+        leading: IconButton(
+          onPressed: () {
+            Navigator.pop(context);
+          },
+          icon: const Icon(Icons.arrow_back),
+        ),
       ),
       body: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -75,11 +82,10 @@ class SettingsPageState extends State<SettingsPage> {
               controller: tokenController,
               obscureText: _obscurePassword,
               decoration: InputDecoration(
-                border: const UnderlineInputBorder(),
-                hintText: 'Escribe tu access Token',
-                labelText: 'Access Token',
-                suffixIcon: createSwap()
-              ),
+                  border: const UnderlineInputBorder(),
+                  hintText: 'Escribe tu access Token',
+                  labelText: 'Access Token',
+                  suffixIcon: createSwap()),
             ),
           ),
           Padding(
@@ -88,11 +94,10 @@ class SettingsPageState extends State<SettingsPage> {
               controller: secretController,
               obscureText: _obscurePassword,
               decoration: InputDecoration(
-                border: const UnderlineInputBorder(),
-                hintText: 'Escribe tu access Secret',
-                labelText: 'Access Secret',
-                suffixIcon: createSwap()
-              ),
+                  border: const UnderlineInputBorder(),
+                  hintText: 'Escribe tu access Secret',
+                  labelText: 'Access Secret',
+                  suffixIcon: createSwap()),
             ),
           ),
           Padding(
